@@ -18,7 +18,7 @@ FaData<-read.csv("InputData/FallopiaData.csv")
 ### Data wrangling
 
 a. Remove rows with ‘Total’ biomass < 60
-b. Reorder the columns so that they are in the order: ‘Total’, ‘Taxon’, ‘Senario’, ‘Nutrients’, and remove the other columns
+b. Reorder the columns so that they are in the order: ‘Total’, ‘Taxon’, ‘Scenario’, ‘Nutrients’, and remove the other columns
 c.Make a new column TotalG, which converts the ‘Total’ column from mg to grams AND replace Total with TotalG, and add it to the dataset.
 
 ```{r data wrang}
@@ -31,12 +31,33 @@ FaData %>%
 ```
 
 ### Custom Fuction
+Write a custom function that will take two inputs from the user: 1. a vector of data to process (e.g. column from a data.frame object) and 2. a string that defines what calculation to perform.
+1. if string #2 is "Average" then calculate the average value for the column named in vector #1 
+2. if string #2 is "Sum" then calculate the sum of values for the column named in vector #1
+3. if string #2 is "Observations" then count the number of observed values for the column named in vector #1
+4. if string #2 is anything else, then output an error to the user 
 
 ```{r}
+MyFunction<-function(FaData,var1=0,var2="string"){
+  if(var2=="Average"){
+    (Average=mean(var1))
+  }
+  if(var2=="Sum"){
+    (Sum=sum(var1))
+  }
+  if(var2=="Observations"){
+    count(var1)
+  }
+  if(var2 != "Average" | "Sum" | "Observations"){
+    print("error not a valid input")
+  }
+return()
+}
 
 
-
+MyFunction(var1=FaData$Total,var2="Average")
 ```
+
 
 
 ## Including Plots

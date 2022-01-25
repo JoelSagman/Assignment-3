@@ -1,0 +1,48 @@
+---
+title: "A3_JOEL_SAGMAN"
+author: "Joel Sagman"
+date: "1/25/2022"
+output: html_document
+---
+
+## Project Info
+Github Username: JoelSagman
+Github Link: https://github.com/JoelSagman/Assignment-3
+
+### Load the FallopiaData.csv
+```{r setup}
+library(dplyr)
+FaData<-read.csv("InputData/FallopiaData.csv")
+```
+
+### Data wrangling
+
+a. Remove rows with ‘Total’ biomass < 60
+b. Reorder the columns so that they are in the order: ‘Total’, ‘Taxon’, ‘Senario’, ‘Nutrients’, and remove the other columns
+c.Make a new column TotalG, which converts the ‘Total’ column from mg to grams AND replace Total with TotalG, and add it to the dataset.
+
+```{r data wrang}
+FaData %>%
+  filter(Total < 60) %>%
+  relocate(Total, Taxon, Scenario, Nutrients) %>%
+  select(Total:Nutrients) %>%
+  mutate(TotalG = Total * 1000) # Needs to be corrected
+
+```
+
+### Custom Fuction
+
+```{r}
+
+```
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

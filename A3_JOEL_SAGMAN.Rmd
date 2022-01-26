@@ -19,14 +19,14 @@ FaData<-read.csv("InputData/FallopiaData.csv")
 
 a. Remove rows with ‘Total’ biomass < 60
 b. Reorder the columns so that they are in the order: ‘Total’, ‘Taxon’, ‘Scenario’, ‘Nutrients’, and remove the other columns
-c.Make a new column TotalG, which converts the ‘Total’ column from mg to grams AND replace Total with TotalG, and add it to the dataset.
+c. Make a new column TotalG, which converts the ‘Total’ column from mg to grams AND replace Total with TotalG, and add it to the dataset.
 
 ```{r data wrang}
-FaData %>%
+WrangData <- FaData %>%
   filter(Total < 60) %>%
   relocate(Total, Taxon, Scenario, Nutrients) %>%
   select(Total:Nutrients) %>%
-  mutate(TotalG = Total * 1000) # Needs to be corrected
+  mutate(TotalG = Total * 1000, Total=NULL) 
 
 ```
 
@@ -38,34 +38,34 @@ Write a custom function that will take two inputs from the user: 1. a vector of 
 4. if string #2 is anything else, then output an error to the user 
 
 ```{r}
-MyFunction<-function(FaData,var1=0,var2="string"){
+MyFunction<-function(WrangData,var1=0,var2="string"){
   if(var2=="Average"){
     (Average=mean(var1))
+    return("Average"= Average)
   }
   if(var2=="Sum"){
     (Sum=sum(var1))
+    return("Sum"= Sum)
   }
   if(var2=="Observations"){
-    count(var1)
+    (Observations<-length(var1))
+    return(Observations)
   }
-  if(var2 != "Average" | "Sum" | "Observations"){
-    print("error not a valid input")
+  if(var2 != ""){
+    return(print("error in user input"))
   }
-return()
 }
-
-
-MyFunction(var1=FaData$Total,var2="Average")
 ```
 
+a. Write some R code that uses your function to count the total number of observations in the 'Taxon' column.
+b. Write some R code that uses your function  to calculate the average TotalG for each of the two Nutrient concentrations.
+```{r}
+(TotalTaxon<-MyFunction(var1=WrangData$Taxon,var2="Observations"))
 
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+(TotalG<-MyFunction(var1=WrangData$TotalG,var2="Average"))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Write (i.e. save) the new data to a file called "WrangledData.csv" in the Output folder. 
+```{r}
+write.csv(WrangData, "./Output/WrangledData.csv", row.names=F) #save data to output file 
+```

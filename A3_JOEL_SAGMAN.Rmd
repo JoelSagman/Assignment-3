@@ -22,12 +22,12 @@ b. Reorder the columns so that they are in the order: ‘Total’, ‘Taxon’, 
 c. Make a new column TotalG, which converts the ‘Total’ column from mg to grams AND replace Total with TotalG, and add it to the dataset.
 
 ```{r data wrang}
-WrangData <- FaData %>%
+WrData <- FaData %>%
   filter(Total < 60) %>%
   relocate(Total, Taxon, Scenario, Nutrients) %>%
   select(Total:Nutrients) %>%
-  mutate(TotalG = Total * 1000, Total=NULL) 
-
+  mutate(TotalG = Total * 1000,
+         Total=NULL, .before=1)
 ```
 
 ### Custom Fuction

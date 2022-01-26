@@ -6,11 +6,13 @@ output: html_document
 ---
 
 ## Project Info
+
 Github Username: JoelSagman
 Github Link: https://github.com/JoelSagman/Assignment-3
 
 ### Load the FallopiaData.csv
-```{r setup}
+
+```{r message = FALSE}
 library(dplyr)
 FaData<-read.csv("InputData/FallopiaData.csv")
 ```
@@ -31,14 +33,16 @@ WrData <- FaData %>%
 ```
 
 ### Custom Fuction
-Write a custom function that will take two inputs from the user: 1. a vector of data to process (e.g. column from a data.frame object) and 2. a string that defines what calculation to perform.
+Write a custom function that will take two inputs from the user: 
+1. a vector of data to process (e.g. column from a data.frame object) and 2. a string that defines what calculation to perform.
+
 1. if string #2 is "Average" then calculate the average value for the column named in vector #1 
 2. if string #2 is "Sum" then calculate the sum of values for the column named in vector #1
 3. if string #2 is "Observations" then count the number of observed values for the column named in vector #1
 4. if string #2 is anything else, then output an error to the user 
 
 ```{r}
-MyFunction<-function(WrangData,var1=0,var2="string"){
+MyFunction<-function(WrangData,var1=0,var2="string"){ 
   if(var2=="Average"){
     (Average=mean(var1))
     return("Average"= Average)
@@ -57,15 +61,21 @@ MyFunction<-function(WrangData,var1=0,var2="string"){
 }
 ```
 
+
+### Custom funtion in action
+
 a. Write some R code that uses your function to count the total number of observations in the 'Taxon' column.
 b. Write some R code that uses your function  to calculate the average TotalG for each of the two Nutrient concentrations.
-```{r}
-(TotalTaxon<-MyFunction(var1=WrangData$Taxon,var2="Observations"))
 
-(TotalG<-MyFunction(var1=WrangData$TotalG,var2="Average"))
+```{r}
+(TotalTaxon<-MyFunction(var1=WrData$Taxon,var2="Observations"))
+
+(TotalG<-MyFunction(var1=WrData$TotalG,var2="Average"))
 ```
 
-Write (i.e. save) the new data to a file called "WrangledData.csv" in the Output folder. 
+### Writing new wrangled data file to output folder
+
 ```{r}
-write.csv(WrangData, "./Output/WrangledData.csv", row.names=F) #save data to output file 
+write.csv(WrData, "./Output/WrangledData.csv", row.names=F)
 ```
+

@@ -2,12 +2,15 @@
 title: "A3_JOEL_SAGMAN"
 author: "Joel Sagman"
 date: "1/25/2022"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ## Project Info
 
 Github Username: JoelSagman
+
 Github Link: https://github.com/JoelSagman/Assignment-3
 
 ### Load the FallopiaData.csv
@@ -15,6 +18,15 @@ Github Link: https://github.com/JoelSagman/Assignment-3
 ```{r message = FALSE}
 library(dplyr)
 FaData<-read.csv("InputData/FallopiaData.csv")
+```
+
+```{r}
+rename(FaData, To = Total)
+
+MyData %>%
+  group_by(D) %>%
+  summarise(mean(Size))
+
 ```
 
 ### Data wrangling
@@ -30,6 +42,12 @@ WrData <- FaData %>%
   select(Total:Nutrients) %>%
   mutate(TotalG = Total * 1000,
          Total=NULL, .before=1)
+
+F <- FaData %>%
+  group_by(Nutrients) %>%
+  summarise(mean(Total),
+            .groups="keep")
+
 ```
 
 ### Custom Fuction

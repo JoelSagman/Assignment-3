@@ -1,0 +1,34 @@
+---
+title: "A4_JOEL_SAGMAN"
+author: "Joel Sagman"
+date: "2/2/2022"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Project Info
+
+Github Username: JoelSagman
+
+Github Link: https://github.com/JoelSagman/Assignment-3
+
+### Importing Data and Load packages
+```{r message= FALSE}
+library(dplyr)
+MData<-FaData<-read.csv("InputData/measurements.csv")
+```
+
+### Regex and data wrangling
+```{r}
+MData <- MData %>%
+  mutate(Sp = sub("(\\w)\\w+", "\\1.", Organism)) #Replace species name in organism with initial and .
+SpData <- MData %>% 
+  select(-Organism) %>% #remove Organism column
+  relocate(Sp) #relocate Sp to beginning
+```
+
+### Outputing dataset
+```{r}
+write.csv(SpData,"./Output/MeasShort.csv")
+```
